@@ -2,7 +2,7 @@
 
 
 
-import { AppComponent } from './app.component';
+import { AppComponent, MyDialog, Counter }  from './app.component'
 import { SearchitemComponent } from './searchitem/searchitem.component';
 import { HomeComponent } from './home/home.component';
 import { AppArtistTrackListComponent } from './app-artist-track-list/app-artist-track-list.component';
@@ -29,7 +29,8 @@ import { SearchService } from './search.service';
     HomeComponent,
     AppArtistTrackListComponent,
     ArtistAlbumListComponent,
-    ArtistComponent
+    ArtistComponent,
+    MyDialog, Counter
   ],
   imports: [
     BrowserModule,
@@ -42,17 +43,22 @@ import { SearchService } from './search.service';
       {path: 'find', redirectTo: 'search'},
       {path: 'home', component: HomeComponent},
       {path: 'search', component: SearchitemComponent},
-      {
-        path: '',
-        component: ArtistComponent,
-        children: [
-          {path: '', redirectTo: 'albums', pathMatch: 'full'},
-          {path: 'tracks', component: AppArtistTrackListComponent},
-          {path: 'albums', component: ArtistAlbumListComponent},
-        ]
-      },
-      {path: '**', component: HomeComponent}
-    ],{useHash: true})],
+    
+      {path: '**', component: ArtistComponent},
+      {path: '', component: AppComponent}
+    ],{useHash: true}),
+    RouterModule.forChild([{
+      path: '',
+      component: ArtistComponent,
+    
+      children: [
+        
+        {path: 'tracks', component: AppArtistTrackListComponent},
+        {path: 'albums', component: ArtistAlbumListComponent},
+      ]
+    }]),
+  ],
+   
  
   providers: [SearchService],
   bootstrap: [AppComponent]
